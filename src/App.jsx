@@ -13,12 +13,14 @@ import {SignIn} from './pages/SignIn'
 import {SignUp} from './pages/SignUp'
 import { UserProvider } from './context/UserContext';
 import { PwReset } from './pages/PwReset';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   return (
     <BrowserRouter>
     <UserProvider>
       <ToastContainer/>
+        <div className="app">
       <Navbar/>
       <Routes>
         <Route path='/' element={<Home/>}/>
@@ -31,8 +33,10 @@ function App() {
         <Route path='/pwreset' element={<PwReset/>}/>
         <Route path='*' element={<NotFound/>}/>
       </Routes>
+      </div>
       </UserProvider>
     </BrowserRouter>
+
   )
 }
 

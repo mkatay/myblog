@@ -82,7 +82,7 @@ export const SignIn=()=> {
             >
               Sign In
             </Button>
-            <Typography sx={{color:'red',fontSize:'0.6rem',textAlign:'center'}}>{msg?.errSignIn}</Typography>
+            <Typography sx={{color:'red',fontSize:'0.6rem',textAlign:'center'}}>{msg?.signin}</Typography>
            </Box>
         </Box>
         <Box display="grid" gridTemplateColumns="repeat(2, 1fr)" gap={2}>

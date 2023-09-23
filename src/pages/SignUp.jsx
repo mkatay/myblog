@@ -13,15 +13,17 @@ import { UserContext } from '../context/UserContext';
 const defaultTheme = createTheme();
 
 export const SignUp=()=> {
-  const {signUpUser,msg,setMsg,sendEmailLink}=useContext(UserContext)
+  const {signUpUser,msg,setMsg,sendEmailLink,logoutUser}=useContext(UserContext)
 
-  useEffect(()=>{setMsg({...msg,errSignUp:null})},[]);
+  useEffect(()=>{setMsg({...msg,signup:null})},[]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     signUpUser(data.get('email'),data.get('password'),)
+   
     sendEmailLink(data.get('email'))
+    //logoutUser(data.get('email'),data.get('password'))//nincs tesztelve 
   };
 
   return (
@@ -72,7 +74,7 @@ export const SignUp=()=> {
             >
               Sign Up
             </Button>
-            <Typography sx={{color:'red',fontSize:'0.6rem',textAlign:'center'}}>{msg?.errSignUp}</Typography>
+            <Typography sx={{color:'red',fontSize:'0.6rem',textAlign:'center'}}>{msg?.signup}</Typography>
            </Box>
         </Box>
        

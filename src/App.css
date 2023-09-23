@@ -1,7 +1,25 @@
+/*navbar style:*/
 .active {
     background-color:  #928DAB;
     border-radius: 20px;
+  
 }
 a{
-    text-decoration: none;
+    text-decoration: none!important;
+}
+.css-1t6c9ts a{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+    height: 40px;
+}
+
+.createBlog{
+    max-width: 800px;
+    margin:0 auto;
+}
+.app{
+    box-sizing: border-box;
+    background-color: rgba(146, 141, 171,0.2);
+    min-height: 100vh;
 }
