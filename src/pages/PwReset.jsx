@@ -71,7 +71,7 @@ export const PwReset=()=> {
             >
               Reset your password
             </Button>
-            <Typography sx={{color:'red',fontSize:'0.6rem',textAlign:'center'}}>{msg.errResetPw}</Typography>
+            <Typography sx={{color:'red',fontSize:'0.6rem',textAlign:'center'}}>{msg?.resetPw}</Typography>
            </Box>
         </Box>
       </Container>

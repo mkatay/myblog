@@ -18,12 +18,14 @@ export const SignIn=()=> {
   const navigate=useNavigate()
   const {loginUser,msg,user,setMsg,deleteAccount}=useContext(UserContext)
 
-  useEffect(()=>{setMsg({...msg,errSignIn:null})},[])
+  //useEffect(()=>{setMsg({...msg,errSignIn:null})},[])
   useEffect(()=>{
-    if(user){
+    if(user /*&& user.emailVerified*/){
       // user is already signed in
       console.log(user);
       navigate('/');
+    }else{
+      console.log(user);
     }
   },[user])
 
@@ -31,7 +33,7 @@ export const SignIn=()=> {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     loginUser(data.get('email'),data.get('password'))
-    console.log(msg.errSignIn);
+    console.log(msg?.signin);
   };
 
   return (

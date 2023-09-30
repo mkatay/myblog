@@ -23,3 +23,6 @@ a{
     background-color: rgba(146, 141, 171,0.2);
     min-height: 100vh;
 }
+.createBlog p{
+    color:red;
+}

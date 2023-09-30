@@ -40,7 +40,7 @@ export const Navbar=()=> {
   const [navPages, setNavPages] = useState(pages);
 
   useEffect(()=>{
-     if (user) {
+     if (user /*&& user.emailVerified)*/) {
       setNavPages([...pages,{ path: 'create', name: 'Create Blog' }]);
     }else{
       setNavPages([...pages])
@@ -111,7 +111,7 @@ export const Navbar=()=> {
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
-              {!user ? 
+              {!user /*|| (user && !user.emailVerified)*/ ? 
                 <>
                   <IconButton sx={{ p: 0 }}>
                     {/*<Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />*/}
@@ -128,7 +128,7 @@ export const Navbar=()=> {
                </>  
                :
                <>
-                <IconButton><Avatar sx={{ bgcolor: deepPurple[500] }} title={user.email}>{user.email.at(0)}</Avatar></IconButton>
+                <IconButton><Avatar sx={{ bgcolor: deepPurple[500],fontSize:'10px' }} title={user.email}>{/*user.email.at(0)*/user.displayName}</Avatar></IconButton>
                   <IconButton sx={{ p: 0 }} onClick={()=>logoutUser()}>
                   <LogoutIcon sx={{color:'white'}}/>
                 </IconButton>

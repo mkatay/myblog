@@ -13,17 +13,14 @@ import { UserContext } from '../context/UserContext';
 const defaultTheme = createTheme();
 
 export const SignUp=()=> {
-  const {signUpUser,msg,setMsg,sendEmailLink,logoutUser}=useContext(UserContext)
+  const {signup,msg,setMsg,sendEmailLink}=useContext(UserContext)
 
   useEffect(()=>{setMsg({...msg,signup:null})},[]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    signUpUser(data.get('email'),data.get('password'),)
-   
-    sendEmailLink(data.get('email'))
-    //logoutUser(data.get('email'),data.get('password'))//nincs tesztelve 
+    signup(data.get('email'),data.get('password'),data.get('displayName'))
   };
 
   return (
@@ -64,6 +61,15 @@ export const SignUp=()=> {
               type="password"
               id="password"
               autoComplete="current-password"
+            />
+             <TextField
+              margin="normal"
+              required
+              fullWidth
+              name="displayName"
+              label="Username"
+              type="text"
+              id="displayName"
             />
            
             <Button

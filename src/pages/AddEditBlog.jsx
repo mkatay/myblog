@@ -1,10 +1,11 @@
-import React,{useState,useContext} from 'react'
+import React,{useState,useContext,useEffect} from 'react'
 import { useForm } from 'react-hook-form';
 import {Form,Label,Row,Col,FormGroup} from 'reactstrap'
 import {uploadFile} from '../utility/uploadFile'
 import { Loader } from '../components/Loader';
 import { addPost } from '../utility/crudUtility';
 import {UserContext} from '../context/UserContext'
+import { NotFound } from './NotFound';
 
 const categories=['Food','Entertainment','Sports','Culture','Design','Health','Travel']
 
@@ -12,30 +13,37 @@ export const AddEditBlog = () => {
   const {user}=useContext(UserContext)
   const { register, handleSubmit, reset, formState: { errors } } = useForm({ mode: 'onChange',});
   const [loading, setLoading] = useState(false);
+  const [photo,setPhoto]=useState(null)
 
-  console.log(user);
- 
+  if(!user) return( <NotFound/>)
+  //console.log(user);
+  //console.log(errors)
   const onSubmit =async (data, e) => {
     e.preventDefault()
     setLoading(true);
-    //e.target.reset(); // reset after form submit
+   
     console.log(data)
     try {
       const file = data.file[0];
-      const downloadURL =await uploadFile(file);
-      console.log('Feltöltött fájl URL-je:', downloadURL);
+      const photoURL =await uploadFile(file);
+      console.log('Feltöltött fájl URL-je:', photoURL);
       const newData = { ...data };
       delete newData.file;
-      addPost({...newData,photoUrl:downloadURL,author:user.displayName,userId:user.uid})
+      addPost({...newData,photoURL,author:user.displayName,userId:user.uid})
     } catch (error) {
       console.error('Hiba a fájl feltöltése közben', error);
     }finally {
       setLoading(false);
+      console.log('sikeres feltöltés!');
+      alert('sikeres feltöltés!')
     }
+    e.target.reset(); // reset after form submit
   };
 
+ 
   return (
     <div className='createBlog  p-3'>
+      
       <h3>Create blog</h3>
       <Form onSubmit={handleSubmit(onSubmit)}>
         <Row> 
@@ -49,24 +57,54 @@ export const AddEditBlog = () => {
           <Col md={6}>
             <FormGroup>
             <Label>Blog category</Label>
-              <select className='form-select' style={{maxWidth:'300px'}} {...register('category')}>
+              <select className='form-select' style={{maxWidth:'300px'}} {...register('category',
+                  { required: true ,
+                    validate:(value=>{
+                      if(value==0) return 'You must choose one category for your post!!'
+                    })
+                  }
+              )}>
                   <option value="0">select category</option>
                   {categories.map(ctg=><option key={ctg} value={ctg}>{ctg}</option>)}
               </select>
+              <p>{errors?.category?.message}</p>
           </FormGroup>
         </Col>
       </Row>
       <FormGroup>
         <Label>Description:</Label>
-        <textarea className="form-control"  {...register('description')} cols="100" rows="10"></textarea> 
+        <textarea className="form-control"  {...register('description',{required:true})} cols="100" rows="10"></textarea> 
+        {errors?.description && <p>Description is required!</p>}
       </FormGroup>
      <Row>
         <Col md={6}>
           <FormGroup>  
-              <input className="form-control" type="file" {...register('file')} />
+              <input className="form-control" type="file" {...register('file',
+                    { required: true,
+                       validate: (value) => {
+                        const acceptedFormats = ['jpg','png'];
+                        const fileExtension = value[0]?.name.split('.').pop().toLowerCase();
+                        if (!acceptedFormats.includes(fileExtension)) 
+                            return 'Invalid file format.';
+                        if (value[0].size > 1 * 1000 * 1024) 
+                          return "File with maximum size of 1MB is allowed"
+                        return true;
+                    }
+              })} 
+              onChange={(e)=>setPhoto(URL.createObjectURL(e.target.files[0]))}
+              />
+              <p>{errors?.file?.message}</p>
+              
           </FormGroup>
         </Col>
-        <Col md={6}>
+        <Col md={2}>
+          <input type="submit" className='btn btn-primary' disabled={loading}/>
+        </Col>
+        <Col md={2}>
+          {photo && <img className='img-thumbnail' src={photo} alt="postPhoto" />}
+        </Col>
+        
+      {/*  <Col md={6}>
           <Label className='px-2'> Are you a developer?</Label>
             <FormGroup className='form-check-inline'>    
               <input className="form-check-input"type="radio" value="Yes" {...register('developer')} />  
@@ -74,9 +112,8 @@ export const AddEditBlog = () => {
               <input className="form-check-input"type="radio" value="No" {...register('developer')} />  
               <Label check className='px-2'>No</Label>
             </FormGroup>
-        </Col>
+            </Col>*/}
       </Row>
-      <input type="submit" className='btn btn-primary' disabled={loading}/>
       {loading && <Loader />}
     </Form>
     </div>
