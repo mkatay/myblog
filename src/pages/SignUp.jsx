@@ -13,7 +13,7 @@ import { UserContext } from '../context/UserContext';
 const defaultTheme = createTheme();
 
 export const SignUp=()=> {
-  const {signup,msg,setMsg,sendEmailLink}=useContext(UserContext)
+  const {signup,msg,setMsg}=useContext(UserContext)
 
   useEffect(()=>{setMsg({...msg,signup:null})},[]);
 

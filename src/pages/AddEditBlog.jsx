@@ -5,15 +5,19 @@ import {uploadFile} from '../utility/uploadFile'
 import { Loader } from '../components/Loader';
 import { addPost } from '../utility/crudUtility';
 import {UserContext} from '../context/UserContext'
+import { CategContext } from '../context/CategContext';
 import { NotFound } from './NotFound';
+import { MyAlert } from '../components/MyAlert';
 
-const categories=['Food','Entertainment','Sports','Culture','Design','Health','Travel']
+//const categories=['Food','Entertainment','Sports','Culture','Design','Health','Travel']
 
 export const AddEditBlog = () => {
   const {user}=useContext(UserContext)
+  const {categories}=useContext(CategContext)
   const { register, handleSubmit, reset, formState: { errors } } = useForm({ mode: 'onChange',});
   const [loading, setLoading] = useState(false);
   const [photo,setPhoto]=useState(null)
+  const [uploaded,setUploaded]=useState(false)
 
   if(!user) return( <NotFound/>)
   //console.log(user);
@@ -22,7 +26,7 @@ export const AddEditBlog = () => {
     e.preventDefault()
     setLoading(true);
    
-    console.log(data)
+    //console.log(data)
     try {
       const file = data.file[0];
       const photoURL =await uploadFile(file);
@@ -30,12 +34,13 @@ export const AddEditBlog = () => {
       const newData = { ...data };
       delete newData.file;
       addPost({...newData,photoURL,author:user.displayName,userId:user.uid})
+      setUploaded(true)
     } catch (error) {
       console.error('Hiba a fájl feltöltése közben', error);
     }finally {
       setLoading(false);
-      console.log('sikeres feltöltés!');
-      alert('sikeres feltöltés!')
+    //  console.log('sikeres feltöltés!');
+   //alert('sikeres feltöltés!')
     }
     e.target.reset(); // reset after form submit
   };
@@ -115,6 +120,7 @@ export const AddEditBlog = () => {
             </Col>*/}
       </Row>
       {loading && <Loader />}
+      {uploaded && <MyAlert txt={'Sikeres feltöltés!'}/>}
     </Form>
     </div>
   )

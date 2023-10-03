@@ -1,7 +1,18 @@
-import React from 'react'
+import React,{useState} from 'react'
+import { Categories } from '../components/Categories'
+import {Posts} from '../components/Posts'
 
 export const Home = () => {
+  const [selectedCategories,setSelectedCategories] =useState([])
   return (
-    <div>Home</div>
+    <div className='home'>
+      <div className="categ shadow">
+          <Categories  selectedCategories={selectedCategories} setSelectedCategories={setSelectedCategories}/>
+      </div>
+      <div className="posts ">
+         <Posts selectedCategories={selectedCategories} />
+      </div>
+     
+    </div>
   )
 }

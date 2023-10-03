@@ -50,6 +50,7 @@ console.log(msg);
       });
       localStorage.setItem('email', email);
       setMsg({...msg,signup:'We have sent you an email with a link to sign in'});
+      
     } catch (err) {
       setMsg({...msg,err:err.message})
       console.error(err.message);

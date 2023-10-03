@@ -1,3 +1,7 @@
+*{
+    box-sizing: border-box;
+    margin: 0;
+}
 /*navbar style:*/
 .active {
     background-color:  #928DAB;
@@ -22,7 +26,35 @@ a{
     box-sizing: border-box;
     background-color: rgba(146, 141, 171,0.2);
     min-height: 100vh;
+    margin-top: 65px;
+    padding-top: 1rem;
 }
 .createBlog p{
     color:red;
+}
+.home{
+    display: grid;
+    grid-template-columns:80% 20%;
+    min-height: calc(100vh - 65px);
+    width: 100%;
+}
+.posts{
+    order:1;
+}
+.categ{
+    order:2;
+   
+    
+}
+@media (max-width:500px){
+    .home{
+        display: flex;
+        flex-direction: column;
+    }
+    .posts{
+        order:2;
+    }
+    .categ{
+        order:1;
+}
 }

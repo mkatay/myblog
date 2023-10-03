@@ -56,7 +56,7 @@ export const Navbar=()=> {
   };
 
   return (
-    <AppBar position="static" sx={{backgroundColor:'#74EBD5',backgroundImage: 'linear-gradient(#1F1C2C,#928DAB)'
+    <AppBar position="fixed" sx={{backgroundColor:'#74EBD5',backgroundImage: 'linear-gradient(#1F1C2C,#928DAB)'
       }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>

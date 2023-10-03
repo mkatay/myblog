@@ -1,5 +1,5 @@
 //a backend kölünválasztva
-import {db} from "../utility/firebaseApp";
+import {db} from "./firebaseApp";
 import {collection, addDoc,doc,deleteDoc,query,
   where,getDocs,serverTimestamp, updateDoc,orderBy,onSnapshot } from "firebase/firestore";
 
@@ -11,17 +11,29 @@ export const addPost =async (formData) => {
     //console.log("az új documentum azonosítója:",newDocRef.id)
   };
 
-
-export const readTodos = (setTodos) => {
-  const collectionRef = collection(db, "todolist");
+/*
+export const readPosts = (setPosts) => {
+  const collectionRef = collection(db, "posts");
   const q = query(collectionRef, orderBy('timestamp', 'desc'));
   const unsubscribe = onSnapshot(q, (snapshot) => {
-    setTodos(snapshot.docs.map(doc => ({ ...doc.data(), id: doc.id })));
+    setPosts(snapshot.docs.map(doc => ({ ...doc.data(), id: doc.id })));
   });
   return unsubscribe;
+};*/
+
+export const readPosts = async (setPosts) => {
+  const collectionRef = collection(db, "posts");
+  const q = query(collectionRef, orderBy('timestamp', 'desc'));
+
+  try {
+    const snapshot = await getDocs(q);
+    setPosts(snapshot.docs.map(doc => ({ ...doc.data(), id: doc.id })));
+  } catch (error) {
+    console.error("Hiba történt a bejegyzések olvasása közben:", error);
+  }
 };
 
-
+/*
 
   export const editTodo=async (id,todo)=>{
     const docRef= doc(db, "todolist", id);
@@ -56,4 +68,4 @@ export const readTodos = (setTodos) => {
         await deleteDoc(docRef) 
         })
     } 
-  
+  */
