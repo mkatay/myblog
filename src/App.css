@@ -4,8 +4,7 @@
 }
 /*navbar style:*/
 .active {
-    background-color:  #928DAB;
-    border-radius: 20px;
+    border-bottom:0.5px dotted white;
   
 }
 a{
@@ -31,30 +30,4 @@ a{
 }
 .createBlog p{
     color:red;
-}
-.home{
-    display: grid;
-    grid-template-columns:80% 20%;
-    min-height: calc(100vh - 65px);
-    width: 100%;
-}
-.posts{
-    order:1;
-}
-.categ{
-    order:2;
-   
-    
-}
-@media (max-width:500px){
-    .home{
-        display: flex;
-        flex-direction: column;
-    }
-    .posts{
-        order:2;
-    }
-    .categ{
-        order:1;
-}
 }

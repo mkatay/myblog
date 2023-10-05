@@ -11,16 +11,23 @@ export const addPost =async (formData) => {
     //console.log("az új documentum azonosítója:",newDocRef.id)
   };
 
-/*
-export const readPosts = (setPosts) => {
+//Ez a függvény aszinkron módon működik. Az onSnapshot függvény egy eseményfigyelő, amely figyeli 
+//a Firestore adatbázisban történő változásokat. Amikor a posts gyűjteményben változás történik (pl. új bejegyzés hozzáadása), akkor az onSnapshot meghívódik, és frissíti a bejegyzéseket az aktuális adatokkal.
+export const readPosts = (setPosts,selectedCategories) => {
   const collectionRef = collection(db, "posts");
-  const q = query(collectionRef, orderBy('timestamp', 'desc'));
+  const q =selectedCategories.length==0 ?  query(collectionRef, orderBy('timestamp', 'desc'))
+                                        : query(collectionRef,where('category','in',selectedCategories))
   const unsubscribe = onSnapshot(q, (snapshot) => {
     setPosts(snapshot.docs.map(doc => ({ ...doc.data(), id: doc.id })));
   });
   return unsubscribe;
-};*/
+};
 
+
+//Ez a függvény szinkron módon működik. A getDocs függvény a Firestore adatbázisból szinkron módon lekéri az adatokat. Ez azt jelenti, hogy a függvény csak akkor tér vissza, amikor az adatokat teljesen lekérte vagy egy hibát dobott. Ez a módszer egyszerűbb lehet használni, de ha hosszú ideig tart az adatlekérés, akkor blokkolhatja az alkalmazás fő szálát.
+
+//A választás attól függ, hogy melyik megközelítés a jobb az adott alkalmazás számára. Az aszinkron megközelítés általában ajánlott, mivel nem blokkolja az alkalmazást, és lehetővé teszi az alkalmazás folyamatos működését a háttérben. Azonban fontos kezelni az aszinkron kódhoz kapcsolódó hibákat is.
+/*
 export const readPosts = async (setPosts) => {
   const collectionRef = collection(db, "posts");
   const q = query(collectionRef, orderBy('timestamp', 'desc'));
@@ -31,7 +38,7 @@ export const readPosts = async (setPosts) => {
   } catch (error) {
     console.error("Hiba történt a bejegyzések olvasása közben:", error);
   }
-};
+};*/
 
 /*
 
