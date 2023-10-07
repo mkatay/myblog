@@ -8,6 +8,7 @@ import {UserContext} from '../context/UserContext'
 import { CategContext } from '../context/CategContext';
 import { NotFound } from './NotFound';
 import { MyAlert } from '../components/MyAlert';
+import { Story } from '../components/Story';
 
 //const categories=['Food','Entertainment','Sports','Culture','Design','Health','Travel']
 
@@ -18,6 +19,7 @@ export const AddEditBlog = () => {
   const [loading, setLoading] = useState(false);
   const [photo,setPhoto]=useState(null)
   const [uploaded,setUploaded]=useState(false)
+  const [story,setStory]=useState('')
 
   if(!user) return( <NotFound/>)
   //console.log(user);
@@ -33,7 +35,7 @@ export const AddEditBlog = () => {
       console.log('Feltöltött fájl URL-je:', photoURL);
       const newData = { ...data };
       delete newData.file;
-      addPost({...newData,photoURL,author:user.displayName,userId:user.uid})
+      addPost({...newData,photoURL,author:user.displayName,userId:user.uid,description:story})
       setUploaded(true)
     } catch (error) {
       console.error('Hiba a fájl feltöltése közben', error);
@@ -77,9 +79,10 @@ export const AddEditBlog = () => {
         </Col>
       </Row>
       <FormGroup>
-        <Label>Description:</Label>
+        <Story story={story} setStory={setStory} />
+        {/*<Label>Description:</Label>
         <textarea className="form-control"  {...register('description',{required:true})} cols="100" rows="10"></textarea> 
-        {errors?.description && <p>Description is required!</p>}
+                {errors?.description && <p>Description is required!</p>}*/}
       </FormGroup>
      <Row>
         <Col md={6}>
@@ -108,16 +111,7 @@ export const AddEditBlog = () => {
         <Col md={2}>
           {photo && <img className='img-thumbnail' src={photo} alt="postPhoto" />}
         </Col>
-        
-      {/*  <Col md={6}>
-          <Label className='px-2'> Are you a developer?</Label>
-            <FormGroup className='form-check-inline'>    
-              <input className="form-check-input"type="radio" value="Yes" {...register('developer')} />  
-              <Label check className='px-2'>Yes</Label>
-              <input className="form-check-input"type="radio" value="No" {...register('developer')} />  
-              <Label check className='px-2'>No</Label>
-            </FormGroup>
-            </Col>*/}
+    
       </Row>
       {loading && <Loader />}
       {uploaded && <MyAlert txt={'Sikeres feltöltés!'}/>}

@@ -1,6 +1,6 @@
 //a backend kölünválasztva
 import {db} from "./firebaseApp";
-import {collection, addDoc,doc,deleteDoc,query,
+import {collection, addDoc,doc,deleteDoc,query,getDoc,
   where,getDocs,serverTimestamp, updateDoc,orderBy,onSnapshot } from "firebase/firestore";
 
 export const addPost =async (formData) => {
@@ -22,6 +22,22 @@ export const readPosts = (setPosts,selectedCategories) => {
   });
   return unsubscribe;
 };
+
+export const readPost = async (id, setPost) => {
+  const docRef = doc(db, "posts", id);
+  try{
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+      setPost({ ...docSnap.data(), id: docSnap.id });
+    } else {
+      console.log("A dokumentum nem található.");
+    }
+  } catch (error) {
+    console.error("Hiba a dokumentum olvasása közben:", error);
+  }
+};
+    
+
 
 
 //Ez a függvény szinkron módon működik. A getDocs függvény a Firestore adatbázisból szinkron módon lekéri az adatokat. Ez azt jelenti, hogy a függvény csak akkor tér vissza, amikor az adatokat teljesen lekérte vagy egy hibát dobott. Ez a módszer egyszerűbb lehet használni, de ha hosszú ideig tart az adatlekérés, akkor blokkolhatja az alkalmazás fő szálát.

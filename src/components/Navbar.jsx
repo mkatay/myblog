@@ -30,8 +30,8 @@ import { useEffect,useState } from 'react';
 const pages = [
   { path: '/', name: 'Home' },
   { path: 'about', name: 'About' },
-  { path: 'detail/:id', name: 'Detail' },
-  { path: 'update/:id', name: 'Update Blog' },
+ /* { path: 'detail/:id', name: 'Detail' },
+  { path: 'update/:id', name: 'Update Blog' },*/
 ];
 
 export const Navbar=()=> {

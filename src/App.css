@@ -22,12 +22,27 @@ a{
     margin:0 auto;
 }
 .app{
-    box-sizing: border-box;
+ 
     background-color: rgba(146, 141, 171,0.2);
     min-height: 100vh;
     margin-top: 65px;
     padding-top: 1rem;
+    
 }
-.createBlog p{
+.createBlog p:not(.editor p){
     color:red;
 }
+.editor{
+    min-height: 300px;
+}
+.cardBody{
+    overflow:hidden!important;
+}
+.singlePost img{
+    width: 100%;
+    object-fit:cover;
+    border-radius:5px;
+  }
+  .singlePost p{
+    text-align: justify;
+  }

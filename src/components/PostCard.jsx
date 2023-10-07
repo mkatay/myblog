@@ -1,20 +1,39 @@
 import React from 'react'
 import {motion} from 'framer-motion'
+import { elapsedTime } from '../utility/elapsedTime';
+import {truncatedStory } from '../utility/sanitizeHtml';
+import { useNavigate } from 'react-router-dom';
 
 
-export const PostCard = ({category,photoURL,title,author}) => {
+export const PostCard = ({category,photoURL,title,author,description,timestamp,id}) => {
+  const navigate=useNavigate()
+console.log(timestamp.toString());
+  
   return (
-   
     <div className="card m-3" style={{maxWidth: '100%'}}>
     <div className="row g-0">
-      <motion.div className="col-md-4" whileHover={{scale:1.1}}>
+      <div className="col-md-4">
+        
         <img src={photoURL} className="img-fluid rounded-start" alt={title}/>
-      </motion.div>
+      </div>
       <div className="col-md-8">
         <div className="card-body">
-          <h5 className="card-title">{title} - {category}</h5>
-          <p className="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-          <p className="card-text"><small className="text-muted">Last updated 3 mins ago</small></p>
+          <div className="d-flex flex-wrap justify-content-between">
+            <h5 className="card-title">{title}</h5>
+            <p className="card-text">{category}</p>
+          </div>
+          
+          {/*<p className="card-text" dangerouslySetInnerHTML={htmlContent}></p>*/}
+          <p className="card-text" >{truncatedStory(description)}
+              <small className="text-muted "style={{cursor:'pointer',fontSize:'10px',borderBottom:'1px solid gray'}}
+                onClick={()=>navigate('detail/'+id)}
+                >részletek</small>
+          </p>
+          <div className="d-flex flex-wrap justify-content-between">
+            <p className="card-text"><small className="text-muted">{elapsedTime(timestamp) }</small></p>
+            <p className="card-text"><small className="text-muted">{author}</small></p>
+          </div>
+          
         </div>
       </div>
     </div>
