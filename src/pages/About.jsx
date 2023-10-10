@@ -1,13 +1,13 @@
 import React from 'react'
-import { Story } from '../components/Story'
 import { useState } from 'react'
-
+import { TipTap } from '../components/TipTap';
+import '../components/TipTap.css'
 export const About = () => {
   const [story,setStory]=useState('')
   console.log(story);
   return (
-    <div>
-      <Story story={story} setStory={setStory}/>
+    <div className='tiptap'>
+    <TipTap setStory={setStory} />
     </div>
   )
 }

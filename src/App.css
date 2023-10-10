@@ -40,9 +40,12 @@ a{
 }
 .singlePost img{
     width: 100%;
+    
     object-fit:cover;
     border-radius:5px;
   }
   .singlePost p{
     text-align: justify;
   }
+
+  

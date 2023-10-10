@@ -5,10 +5,12 @@ import {truncatedStory } from '../utility/sanitizeHtml';
 import { useNavigate } from 'react-router-dom';
 
 
+
+
 export const PostCard = ({category,photoURL,title,author,description,timestamp,id}) => {
   const navigate=useNavigate()
-console.log(timestamp.toString());
-  
+//console.log(timestamp.toString());
+
   return (
     <div className="card m-3" style={{maxWidth: '100%'}}>
     <div className="row g-0">
