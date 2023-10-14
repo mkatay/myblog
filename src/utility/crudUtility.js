@@ -1,8 +1,25 @@
 //a backend kölünválasztva
-import {db} from "./firebaseApp";
+import {db,storage} from "./firebaseApp";
 import {collection, addDoc,doc,deleteDoc,query,getDoc,
   where,getDocs,serverTimestamp, updateDoc,orderBy,onSnapshot } from "firebase/firestore";
+import {ref, deleteObject} from "firebase/storage"
 
+export const deleteFile=async (photoURL)=>{
+  console.log(photoURL);
+ const imageRef=ref(storage,photoURL)
+ try{
+  await deleteObject(imageRef)
+  return true
+ }catch(err){
+   console.log('deleteFile:',err);
+   return false
+ }
+}
+export const deletePost=async (id)=>{
+  //console.log('id:',id)
+  const docRef= doc(db, "posts", id);
+  await deleteDoc(docRef)
+}
 export const addPost =async (formData) => {
     console.log(formData);
     const collectionRef= collection(db, "posts");
@@ -46,6 +63,8 @@ export const editPost=async (id,{title,category,description})=>{
 }
 
 
+
+
 //Ez a függvény szinkron módon működik. A getDocs függvény a Firestore adatbázisból szinkron módon lekéri az adatokat. Ez azt jelenti, hogy a függvény csak akkor tér vissza, amikor az adatokat teljesen lekérte vagy egy hibát dobott. Ez a módszer egyszerűbb lehet használni, de ha hosszú ideig tart az adatlekérés, akkor blokkolhatja az alkalmazás fő szálát.
 
 //A választás attól függ, hogy melyik megközelítés a jobb az adott alkalmazás számára. Az aszinkron megközelítés általában ajánlott, mivel nem blokkolja az alkalmazást, és lehetővé teszi az alkalmazás folyamatos működését a háttérben. Azonban fontos kezelni az aszinkron kódhoz kapcsolódó hibákat is.
@@ -64,19 +83,7 @@ export const readPosts = async (setPosts) => {
 
 /*
 
-  export const editTodo=async (id,todo)=>{
-    const docRef= doc(db, "todolist", id);
-    //setDoc(docRef, {todo,done})//felülír minden mezőt, s ha nem sorolok fel mindent, akkor kitörli, s csak a megadott mezők kerülnek be
-    updateDoc(docRef, {todo})//csak azt a mezőt írja felül amit megadok
-  }
-
-  export const doneTodo=async (id,done)=>{
-    //console.log(id,done);
-    const docRef=doc(db, "todolist", id);
-    done= done?false:true;
-    updateDoc(docRef, {done})
-  }
-
+ 
   export const deleteTodo=async (id)=>{
     //console.log('id:',id)
     const docRef= doc(db, "todolist", id);

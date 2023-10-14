@@ -14,6 +14,7 @@ import { SignUp } from "./pages/SignUp";
 import { UserProvider } from "./context/UserContext";
 import { CategProvider } from "./context/CategContext";
 import { PwReset } from "./pages/PwReset";
+import { ConfirmProvider } from "material-ui-confirm";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
     <BrowserRouter>
       <CategProvider>
         <UserProvider>
+          <ConfirmProvider>
           <ToastContainer />
           <div className="app">
             <Navbar />
@@ -36,6 +38,7 @@ function App() {
               <Route path="*" element={<NotFound />} />
             </Routes>
           </div>
+          </ConfirmProvider>
         </UserProvider>
       </CategProvider>
     </BrowserRouter>

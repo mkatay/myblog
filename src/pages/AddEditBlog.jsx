@@ -11,6 +11,7 @@ import { MyAlert } from "../components/MyAlert";
 import { Story } from "../components/Story";
 import { useParams } from "react-router-dom";
 
+
 //const categories=['Food','Entertainment','Sports','Culture','Design','Health','Travel']
 
 export const AddEditBlog = () => {
@@ -65,6 +66,7 @@ export const AddEditBlog = () => {
       //új post esetén
       try {
         const file = data.file[0];
+        console.log(file);
         const photoURL = await uploadFile(file);
         console.log("Feltöltött fájl URL-je:", photoURL);
         const newData = { ...data };
