@@ -29,7 +29,7 @@ a{
     padding-top: 1rem;
     
 }
-.createBlog p:not(.editor p){
+.createBlog p:not(.textEditor p){
     color:red;
 }
 .editor{
@@ -48,4 +48,7 @@ a{
     text-align: justify;
   }
 
-  
+  .icons{
+    font-size: 2rem;
+    cursor: pointer;
+  }

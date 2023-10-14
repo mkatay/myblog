@@ -37,7 +37,13 @@ export const readPost = async (id, setPost) => {
   }
 };
     
-
+export const editPost=async (id,{title,category,description})=>{
+  const docRef= doc(db, "posts", id);
+  //setDoc(docRef, {todo,done})//felülír minden mezőt, s ha nem sorolok fel mindent, akkor kitörli, s csak a megadott mezők kerülnek be
+  updateDoc(docRef, {title,category,description})//csak azt a mezőt írja felül amit megadok
+  //updateDoc(docRef, {category})
+  //updateDoc(docRef, {description})
+}
 
 
 //Ez a függvény szinkron módon működik. A getDocs függvény a Firestore adatbázisból szinkron módon lekéri az adatokat. Ez azt jelenti, hogy a függvény csak akkor tér vissza, amikor az adatokat teljesen lekérte vagy egy hibát dobott. Ez a módszer egyszerűbb lehet használni, de ha hosszú ideig tart az adatlekérés, akkor blokkolhatja az alkalmazás fő szálát.

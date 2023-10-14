@@ -27,7 +27,9 @@ console.log(msg);
   const logoutUser=async ()=>{
     await signOut(auth)   
     setMsg(null)
-    navigate('/')
+    //console.log(location.pathname);
+    if(location.pathname=='/create')
+        navigate('/')
   }
   const loginUser=async (email,password)=>{
     try{

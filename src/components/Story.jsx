@@ -1,11 +1,11 @@
 
 import { TipTap } from './TipTap';
 
-export const Story=({setStory})=>{
+export const Story=({story,setStory})=>{
   
   return (
-    <div className="contact-holder">
-    <TipTap setStory={setStory}/>
+    <div className="tiptap">
+    <TipTap story={story} setStory={setStory}/>
   </div>
   )
 }

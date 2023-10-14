@@ -1,4 +1,10 @@
+import React,{useState} from 'react'
 import { useEditor, EditorContent } from "@tiptap/react";
+import Document from '@tiptap/extension-document'
+import Heading from '@tiptap/extension-heading'
+import Paragraph from '@tiptap/extension-paragraph'
+import Text from '@tiptap/extension-text'
+import TextAlign from '@tiptap/extension-text-align'
 import StarterKit from "@tiptap/starter-kit";
 import Underline from "@tiptap/extension-underline";
 import {
@@ -7,7 +13,10 @@ import {
   FaItalic,
   FaListOl,
   FaListUl,
-  FaQuoteLeft,
+  FaAlignCenter,
+  FaAlignJustify,
+  FaAlignLeft,
+  FaAlignRight,
   FaRedo,
   FaStrikethrough,
   FaUnderline,
@@ -79,7 +88,36 @@ const MenuBar = ({ editor }) => {
           <FaListOl />
         </button>
        
+      
+{/*text align buttons */}
+     
+        <button
+          onClick={() => editor.chain().focus().setTextAlign('left').run()}
+          className={editor.isActive({ textAlign: 'left' }) ? 'is-active' : ''}
+        >
+          <FaAlignLeft/>
+        </button>
+        <button
+          onClick={() => editor.chain().focus().setTextAlign('center').run()}
+          className={editor.isActive({ textAlign: 'center' }) ? 'is-active' : ''}
+        >
+          <FaAlignCenter/>
+        </button>
+        <button
+          onClick={() => editor.chain().focus().setTextAlign('right').run()}
+          className={editor.isActive({ textAlign: 'right' }) ? 'is-active' : ''}
+        >
+          <FaAlignRight/>
+        </button>
+        <button
+          onClick={() => editor.chain().focus().setTextAlign('justify').run()}
+          className={editor.isActive({ textAlign: 'justify' }) ? 'is-active' : ''}
+        >
+          <FaAlignJustify />
+        </button>
+        
       </div>
+
       <div>
         <button onClick={() => editor.chain().focus().undo().run()}>
           <FaUndo />
@@ -92,16 +130,20 @@ const MenuBar = ({ editor }) => {
   );
 };
 
-export const TipTap = ({ setStory}) => {
+export const TipTap = ({story, setStory}) => {
+  
   const editor = useEditor({
-    extensions: [StarterKit, Underline],
-    content: ``,
+    extensions: 
+      [StarterKit, Underline, Document, Paragraph, Text, Heading,
+        TextAlign.configure({types: ['heading', 'paragraph'] }) ],
+    content:story,
 
     onUpdate: ({ editor }) => {
       const html = editor.getHTML();
       setStory(html);
     },
-  });
+  },[story]);
+console.log(story);
 
   return (
     <div className="textEditor">
