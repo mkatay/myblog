@@ -48,7 +48,10 @@ a{
     text-align: justify;
   }
 
-  .icons{
+  .icon{
     font-size: 2rem;
     cursor: pointer;
   }
+.singlePost span{
+    font-size: 0.8rem;
+}

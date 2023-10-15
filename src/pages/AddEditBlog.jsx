@@ -77,6 +77,7 @@ export const AddEditBlog = () => {
           author: user.displayName,
           userId: user.uid,
           description: story,
+          likes:[]
         });
         setUploaded(true);
       } catch (error) {

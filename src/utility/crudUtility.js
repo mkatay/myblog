@@ -1,7 +1,7 @@
 //a backend kölünválasztva
 import {db,storage} from "./firebaseApp";
 import {collection, addDoc,doc,deleteDoc,query,getDoc,
-  where,getDocs,serverTimestamp, updateDoc,orderBy,onSnapshot } from "firebase/firestore";
+  where,arrayUnion,arrayRemove,serverTimestamp, updateDoc,orderBy,onSnapshot } from "firebase/firestore";
 import {ref, deleteObject} from "firebase/storage"
 
 export const deleteFile=async (photoURL)=>{
@@ -40,12 +40,13 @@ export const readPosts = (setPosts,selectedCategories) => {
   return unsubscribe;
 };
 
-export const readPost = async (id, setPost) => {
+export const readPost = async (id, setPost,setLikes) => {
   const docRef = doc(db, "posts", id);
   try{
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
       setPost({ ...docSnap.data(), id: docSnap.id });
+      setLikes(docSnap.data().likes.length)
     } else {
       console.log("A dokumentum nem található.");
     }
@@ -57,13 +58,27 @@ export const readPost = async (id, setPost) => {
 export const editPost=async (id,{title,category,description})=>{
   const docRef= doc(db, "posts", id);
   //setDoc(docRef, {todo,done})//felülír minden mezőt, s ha nem sorolok fel mindent, akkor kitörli, s csak a megadott mezők kerülnek be
-  updateDoc(docRef, {title,category,description})//csak azt a mezőt írja felül amit megadok
+  await updateDoc(docRef, {title,category,description})//csak azt a mezőt írja felül amit megadok
   //updateDoc(docRef, {category})
   //updateDoc(docRef, {description})
 }
 
-
-
+export const editLikes=async (postId,userId)=>{
+  console.log(postId,userId);
+  const docRef= doc(db, "posts", postId);
+  const docSnap = await getDoc(docRef);
+  console.log(docSnap.data());
+  console.log(docSnap.data().likes.indexOf(userId))
+  let likeCount=docSnap.data().likes.length//azért hogy ne kelljen minden likeolás után újra futtani a readPost()-t
+  if(docSnap.data().likes.indexOf(userId)==-1){
+    await updateDoc(docRef, {likes: arrayUnion(userId)})
+    likeCount++
+  }else{
+    await updateDoc(docRef, {likes: arrayRemove(userId)});
+    likeCount--
+  }
+  return likeCount
+}
 
 //Ez a függvény szinkron módon működik. A getDocs függvény a Firestore adatbázisból szinkron módon lekéri az adatokat. Ez azt jelenti, hogy a függvény csak akkor tér vissza, amikor az adatokat teljesen lekérte vagy egy hibát dobott. Ez a módszer egyszerűbb lehet használni, de ha hosszú ideig tart az adatlekérés, akkor blokkolhatja az alkalmazás fő szálát.
 

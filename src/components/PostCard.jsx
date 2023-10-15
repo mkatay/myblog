@@ -3,11 +3,12 @@ import {motion} from 'framer-motion'
 import { elapsedTime } from '../utility/elapsedTime';
 import {truncatedStory } from '../utility/sanitizeHtml';
 import { useNavigate } from 'react-router-dom';
+import { FaThumbsUp} from 'react-icons/fa6';
 
 
 
 
-export const PostCard = ({category,photoURL,title,author,description,timestamp,id}) => {
+export const PostCard = ({category,photoURL,title,author,description,timestamp,id,likes}) => {
   const navigate=useNavigate()
 //console.log(timestamp.toString());
 
@@ -33,9 +34,12 @@ export const PostCard = ({category,photoURL,title,author,description,timestamp,i
           </p>
           <div className="d-flex flex-wrap justify-content-between">
             <p className="card-text"><small className="text-muted">{elapsedTime(timestamp) }</small></p>
-            <p className="card-text"><small className="text-muted">{author}</small></p>
+            <p className="card-text">
+              <small className="text-muted">{author}</small>
+            </p>
+            <p className="w-100 text-muted text-end"> <FaThumbsUp/> {likes?.length}</p>
           </div>
-          
+           
         </div>
       </div>
     </div>
