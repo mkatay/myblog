@@ -1,0 +1,27 @@
+  .singlePost p{
+    text-align: justify;
+  }
+
+  .icon{
+    font-size: 2rem;
+    cursor: pointer;
+  }
+.singlePost span{
+    font-size: 0.8rem;
+}
+
+.image-container {
+  max-width: 100%; 
+  max-height:400px; 
+  overflow: hidden; 
+  display: flex; 
+  justify-content: center; 
+  align-items: center; 
+}
+/*ha túl kis méretű a fotó, h ne torzúljon*/
+.image {
+  max-width: 100%; /*hogy a nagy méretűek is jól llátszódjanak*/
+  max-height: 100%; 
+  width: auto;
+  height: auto; 
+}

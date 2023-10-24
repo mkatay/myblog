@@ -14,3 +14,14 @@ export const uploadFile = async (file) => {
     }
   };
   
+  export const uploadAvatar = async (file,userId) => {
+    try {
+        const fileRef = ref(storage, `avatars/${userId+file.name.slice(-4)}`);
+        await uploadBytes(fileRef, file);
+        const downloadURL = await getDownloadURL(fileRef);
+        return downloadURL;
+    } catch (error) {
+      console.error('Hiba a fájl feltöltése közben', error);
+      throw error;
+    }
+  };

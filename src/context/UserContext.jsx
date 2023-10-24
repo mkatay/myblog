@@ -4,6 +4,7 @@ import { onAuthStateChanged,signInWithEmailAndPassword,signOut,createUserWithEma
 import { auth } from '../utility/firebaseApp';
 import { useNavigate } from 'react-router-dom';
 
+
 const photoURL='https://firebasestorage.googleapis.com/v0/b/myblog-7535b.appspot.com/o/uploads%2Favatar.svg?alt=media&token=3b7ea8f7-f87e-414b-9615-8b870172a5e1'
 
 
@@ -12,34 +13,39 @@ export const UserContext = createContext();
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [msg,setMsg]=useState(null)
+ 
   const navigate=useNavigate()
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
-      console.log('user status changed:',user);
+    
+      console.log('user status changed:',user?.uid);
       
     });
-
+ 
     return () => unsubscribe();
   }, []);
-console.log(msg);
 
   const logoutUser=async ()=>{
     await signOut(auth)   
+ 
     setMsg(null)
     //console.log(location.pathname);
-    if(location.pathname=='/create')
+    if(location.pathname=='/create' || location.pathname=='/profile')
         navigate('/')
   }
+
   const loginUser=async (email,password)=>{
     try{
       await signInWithEmailAndPassword(auth,email,password)
-      setMsg({...msg,signin:null})
+        setMsg({...msg,signin:null})
+     
       //await auth.currentUser.verifiedEmail ? setMsg({...msg,signin:null}) : setMsg({...msg,signin:'nem történt meg az email cím visszaigazolása!'})
      }catch(err){
         setMsg({...msg,signin:err.message})
         console.log(err.message)
        }
+      
   }
 
  /*a SignUp.jsx meghívja a signUpUser() után a sendEmailLink()-et: */
@@ -92,9 +98,7 @@ console.log(msg);
       console.error('Hiba történt a fiók törlésekor:', error);
     }
   };
-  /*const updateUserName=async ()=>{
-         await updateDisplayName("KAM");
-  }*/
+
     return (
     <UserContext.Provider value={{ user,msg,setMsg,logoutUser,loginUser,resetPassword,
                                     sendEmailLink,deleteAccount,signup}}>

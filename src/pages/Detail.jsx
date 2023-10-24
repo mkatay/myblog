@@ -10,6 +10,7 @@ import { UserContext } from '../context/UserContext'
 import { useNavigate } from 'react-router-dom'
 import { useConfirm } from "material-ui-confirm";
 import { MyAlert } from '../components/MyAlert'
+import './Detail.css'
 
 export const Detail = () => {
   const {user}=useContext(UserContext)
@@ -59,8 +60,11 @@ const handleLikes=async ()=>{
 }
   return (
     <div className="singlePost container">
-    <div className="p-3">
-     {post &&  <img src={post?.photoURL} alt={post?.title}  />}
+    
+      <div className="image-container">
+         {post &&  <img  className="image" src={post?.photoURL} alt={post?.title}  />}
+      </div>
+    
        <h3 className="text-center m-2">
           {post?.title}
        </h3>
@@ -82,8 +86,11 @@ const handleLikes=async ()=>{
           </div>
         }
        </div>
-       {msg && <MyAlert txt={msg}/>}
-   </div>                          
+       {msg && <MyAlert txt={msg}/>}  
+       <div className="d-flex justify-content-center">
+          <button  className='btn btn-light ' onClick={()=>navigate('/')}>vissza...</button>    
+        </div>  
+                    
  </div>
   )
 }

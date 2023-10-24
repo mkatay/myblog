@@ -10,7 +10,7 @@ export const Posts = ({ selectedCategories }) => {
   useEffect(() => {
     readPosts(setPosts, selectedCategories);
   }, [selectedCategories]);
-  console.log(posts);
+  //console.log(posts);
   return (
     <div>
       <motion.div

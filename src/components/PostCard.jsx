@@ -37,7 +37,7 @@ export const PostCard = ({category,photoURL,title,author,description,timestamp,i
             <p className="card-text">
               <small className="text-muted">{author}</small>
             </p>
-            <p className="w-100 text-muted text-end"> <FaThumbsUp/> {likes?.length}</p>
+            <p className="w-100 text-muted text-end"> <FaThumbsUp className='postcard-icon'/> {likes?.length}</p>
           </div>
            
         </div>

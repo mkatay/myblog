@@ -16,8 +16,11 @@ import { CategProvider } from "./context/CategContext";
 import { PwReset } from "./pages/PwReset";
 import { ConfirmProvider } from "material-ui-confirm";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { Profile } from "./pages/Profile";
+import { useState } from "react";
 
 function App() {
+  const [avatar,setAvatar]=useState(null)
   return (
     <BrowserRouter>
       <CategProvider>
@@ -25,7 +28,7 @@ function App() {
           <ConfirmProvider>
           <ToastContainer />
           <div className="app">
-            <Navbar />
+            <Navbar avatar={avatar} setAvatar={setAvatar}/>
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/detail/:id" element={<Detail />} />
@@ -35,6 +38,7 @@ function App() {
               <Route path="/signin" element={<SignIn />} />
               <Route path="/signup" element={<SignUp />} />
               <Route path="/pwreset" element={<PwReset />} />
+              <Route path="/profile" element={<Profile  setAvatar={setAvatar}/>} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </div>

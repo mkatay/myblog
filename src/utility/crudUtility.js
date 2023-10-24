@@ -1,8 +1,8 @@
 //a backend kölünválasztva
 import {db,storage} from "./firebaseApp";
-import {collection, addDoc,doc,deleteDoc,query,getDoc,
-  where,arrayUnion,arrayRemove,serverTimestamp, updateDoc,orderBy,onSnapshot } from "firebase/firestore";
-import {ref, deleteObject} from "firebase/storage"
+import {collection, addDoc,doc,deleteDoc,query,getDoc,limit,
+  where,arrayUnion,arrayRemove,serverTimestamp, updateDoc,orderBy,onSnapshot, getDocs } from "firebase/firestore";
+import {ref, deleteObject, getDownloadURL} from "firebase/storage"
 
 export const deleteFile=async (photoURL)=>{
   console.log(photoURL);
@@ -77,46 +77,62 @@ export const editLikes=async (postId,userId)=>{
     await updateDoc(docRef, {likes: arrayRemove(userId)});
     likeCount--
   }
+  await updateDoc(docRef,{likeCount})
   return likeCount
 }
 
-//Ez a függvény szinkron módon működik. A getDocs függvény a Firestore adatbázisból szinkron módon lekéri az adatokat. Ez azt jelenti, hogy a függvény csak akkor tér vissza, amikor az adatokat teljesen lekérte vagy egy hibát dobott. Ez a módszer egyszerűbb lehet használni, de ha hosszú ideig tart az adatlekérés, akkor blokkolhatja az alkalmazás fő szálát.
-
-//A választás attól függ, hogy melyik megközelítés a jobb az adott alkalmazás számára. Az aszinkron megközelítés általában ajánlott, mivel nem blokkolja az alkalmazást, és lehetővé teszi az alkalmazás folyamatos működését a háttérben. Azonban fontos kezelni az aszinkron kódhoz kapcsolódó hibákat is.
-/*
-export const readPosts = async (setPosts) => {
+export const popularPosts=async (setPopulars)=>{
   const collectionRef = collection(db, "posts");
-  const q = query(collectionRef, orderBy('timestamp', 'desc'));
+  const q = query(collectionRef, orderBy("likes","desc"), limit(3));
+  const unsubscribe = onSnapshot(q, (snapshot) => {
+    setPopulars(snapshot.docs.map(doc => ({ ...doc.data(), id: doc.id })));
+  });
+  return unsubscribe;
 
+}
+export const updateAvatar=async (avatarUrl,userId)=>{
+  const collectionRef = collection(db, "users");
+  const q =query(collectionRef,where('userId','==',userId))
+  const querySnapshot = await getDocs(q);
+  let docId=null
+  querySnapshot.forEach(doc => docId=doc.id)
+  if(docId){
+      const docRef=doc(db, "users", docId);
+      await updateDoc(docRef, {avatarUrl})
+      console.log('update');
+  } else {
+      const collectionRef= collection(db, "users");
+      await addDoc(collectionRef,{userId,avatarUrl})
+      console.log('új');
+  } 
+}
+
+export const getAvatar = async (userId, setAvatar) => {
   try {
-    const snapshot = await getDocs(q);
-    setPosts(snapshot.docs.map(doc => ({ ...doc.data(), id: doc.id })));
+    const pngAvatarRef = ref(storage, `avatars/${userId}.png`);
+    const jpgAvatarRef = ref(storage, `avatars/${userId}.jpg`);
+    
+    // Ellenőrizzük, hogy a PNG kiterjesztéssel rendelkező fájl létezik-e
+    if (await getDownloadURL(pngAvatarRef).catch(() => null)) {
+      const downloadURL = await getDownloadURL(pngAvatarRef);
+      console.log('downloadURL (PNG):', downloadURL);
+      setAvatar(downloadURL);
+      return;
+    }
+    
+    // Ellenőrizzük, hogy a JPG kiterjesztéssel rendelkező fájl létezik-e
+    if (await getDownloadURL(jpgAvatarRef).catch(() => null)) {
+      const downloadURL = await getDownloadURL(jpgAvatarRef);
+      console.log('downloadURL (JPG):', downloadURL);
+      setAvatar(downloadURL);
+      return;
+    }
+
+    // Ha egyik fájl sem létezik, akkor itt kezeld le a hibát vagy tedd meg a szükséges intézkedéseket
   } catch (error) {
-    console.error("Hiba történt a bejegyzések olvasása közben:", error);
+    console.error('Nincs avatar:', error);
+    setAvatar(null)
   }
-};*/
+}
 
-/*
 
- 
-  export const deleteTodo=async (id)=>{
-    //console.log('id:',id)
-    const docRef= doc(db, "todolist", id);
-    await deleteDoc(docRef)
-  }
-  
-  export const queryDelete=async (userInput)=>{
-    //const userInput=prompt("Mit szeretnél kitörölni? ")
-    const collectionRef= collection(db, "todos");
-    const q=query(collectionRef,where('todo','==',userInput))
-    const snapshot= await getDocs(q)
-    //console.log(snapshot)//ez egy objektum, de ebből csak a dokumentumokra van szükségünk
-    const results=snapshot.docs.map((doc)=>({...doc.data(), id:doc.id}))
-    //console.log(results)//megvan itt az összes id, amit ki kell törölni, következhet a törlés:
-    //API hivása mindig async kell hogy legyen:
-    results.forEach(async result=>{
-        const docRef=doc(db, "todos",result.id)
-        await deleteDoc(docRef) 
-        })
-    } 
-  */

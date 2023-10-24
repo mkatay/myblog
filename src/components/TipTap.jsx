@@ -31,31 +31,31 @@ const MenuBar = ({ editor }) => {
   return (
     <div className="menuBar">
       <div>
-        <button
+        <button type="button"
           onClick={() => editor.chain().focus().toggleBold().run()}
           className={editor.isActive("bold") ? "is_active" : ""}
         >
           <FaBold />
         </button>
-        <button
+        <button type="button"
           onClick={() => editor.chain().focus().toggleItalic().run()}
           className={editor.isActive("italic") ? "is_active" : ""}
         >
           <FaItalic />
         </button>
-        <button
+        <button type="button"
           onClick={() => editor.chain().focus().toggleUnderline().run()}
           className={editor.isActive("underline") ? "is_active" : ""}
         >
           <FaUnderline />
         </button>
-        <button
+        <button type="button"
           onClick={() => editor.chain().focus().toggleStrike().run()}
           className={editor.isActive("strike") ? "is_active" : ""}
         >
           <FaStrikethrough />
         </button>
-        <button
+        <button type="button"
           onClick={() =>
             editor.chain().focus().toggleHeading({ level: 2 }).run()
           }
@@ -65,7 +65,7 @@ const MenuBar = ({ editor }) => {
         >
           <FaHeading />
         </button>
-        <button
+        <button type="button"
           onClick={() =>
             editor.chain().focus().toggleHeading({ level: 3 }).run()
           }
@@ -75,13 +75,13 @@ const MenuBar = ({ editor }) => {
         >
           <FaHeading className="heading3" />
         </button>
-        <button
+        <button type="button"
           onClick={() => editor.chain().focus().toggleBulletList().run()}
           className={editor.isActive("bulletList") ? "is_active" : ""}
         >
           <FaListUl />
         </button>
-        <button
+        <button type="button"
           onClick={() => editor.chain().focus().toggleOrderedList().run()}
           className={editor.isActive("orderedList") ? "is_active" : ""}
         >
@@ -91,19 +91,19 @@ const MenuBar = ({ editor }) => {
       
 {/*text align buttons */}
      
-        <button
+        <button type="button"
           onClick={() => editor.chain().focus().setTextAlign('left').run()}
           className={editor.isActive({ textAlign: 'left' }) ? 'is-active' : ''}
         >
           <FaAlignLeft/>
         </button>
-        <button
+        <button type="button"
           onClick={() => editor.chain().focus().setTextAlign('center').run()}
           className={editor.isActive({ textAlign: 'center' }) ? 'is-active' : ''}
         >
           <FaAlignCenter/>
         </button>
-        <button
+        <button type="button"
           onClick={() => editor.chain().focus().setTextAlign('right').run()}
           className={editor.isActive({ textAlign: 'right' }) ? 'is-active' : ''}
         >

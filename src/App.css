@@ -17,7 +17,7 @@ a{
     height: 40px;
 }
 
-.createBlog{
+.createBlog,.profile{
     max-width: 800px;
     margin:0 auto;
 }
@@ -38,20 +38,9 @@ a{
 .cardBody{
     overflow:hidden!important;
 }
-.singlePost img{
-    width: 100%;
-    
-    object-fit:cover;
-    border-radius:5px;
-  }
-  .singlePost p{
-    text-align: justify;
-  }
-
-  .icon{
-    font-size: 2rem;
-    cursor: pointer;
-  }
-.singlePost span{
-    font-size: 0.8rem;
+.postcard-icon{
+    color:rgb(150, 147, 147);
+}
+.profile{
+    margin-top: 65px;
 }
