@@ -168,11 +168,7 @@ export const AddEditBlog = () => {
             </Col>
           )}
           <Col md={2}>
-            <input
-              type="submit"
-              className="btn btn-primary"
-              disabled={loading}
-            />
+            <input type="submit" className="btn btn-primary"  disabled={loading}/>
           </Col>
           <Col md={2}>
             {photo && (

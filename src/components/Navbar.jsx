@@ -18,7 +18,8 @@ import { deepPurple } from "@mui/material/colors";
 import logo from "../assets/kam.jpg";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getAvatar } from "../utility/crudUtility";
+import { getAvatar } from "../utility/uploadFile";
+;
 
 const pages = [
   { path: "/", name: "Home" },
@@ -34,7 +35,6 @@ export const Navbar = ({avatar,setAvatar}) => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const [navPages, setNavPages] = useState(pages);
-  //const [avatar,setAvatar]=useState(null)
 
   const navigate=useNavigate()
   useEffect(() => {
@@ -60,59 +60,29 @@ avatar && console.log(avatar);
     setAnchorElUser(null);
   };
     return (
-    <AppBar
-      position="fixed"
-      sx={{
-        backgroundColor: "#74EBD5",
-        backgroundImage: "linear-gradient(#1F1C2C,#928DAB)",
-      }}
-    >
+    <AppBar position="fixed"  sx={{backgroundColor: "#74EBD5",backgroundImage: "linear-gradient(#1F1C2C,#928DAB)",}}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <img
-            src={logo}
-            alt="logo"
-            style={{ width: "50px", borderRadius: "50%" }}
-          />
-          <Box
-            sx={{
-              flexGrow: 1,
-              display: { xs: "flex", md: "none" },
-              padding: "10px",
-            }}
-          >
-            <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
+          <img src={logo} alt="logo"style={{ width: "50px", borderRadius: "50%" }}/>
+          <Box  sx={{flexGrow: 1,display: { xs: "flex", md: "none" },padding: "10px",}}>
+            <IconButton size="large"aria-label="account of current user" aria-controls="menu-appbar"
               aria-haspopup="true"
               onClick={handleOpenNavMenu}
               color="inherit"
             >
               <MenuIcon />
             </IconButton>
-            <Menu
-              id="menu-appbar"
+            <Menu id="menu-appbar"
               anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "left",
-              }}
+              anchorOrigin={{vertical: "bottom",horizontal: "left",}}
               keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "left",
-              }}
+              transformOrigin={{vertical: "top",horizontal: "left", }}
               open={Boolean(anchorElNav)}
               onClose={handleCloseNavMenu}
               sx={{ display: { xs: "block", md: "none" } }}
             >
               {navPages.map((obj) => (
-                <NavLink
-                  key={obj.name}
-                  to={obj.path}
-                  className={({ isActive }) => (isActive ? "active" : "")}
-                >
+                <NavLink key={obj.name} to={obj.path} className={({ isActive }) => (isActive ? "active" : "")}>
                   <MenuItem key={obj.name} onClick={handleCloseNavMenu}>
                     <Typography textAlign="center">{obj.name}</Typography>
                   </MenuItem>
@@ -124,16 +94,8 @@ avatar && console.log(avatar);
 
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {navPages.map((obj) => (
-              <NavLink
-                key={obj.name}
-                to={obj.path}
-                className={({ isActive }) => (isActive ? "active" : "")}
-              >
-                <Button
-                  key={obj.name}
-                  sx={{ my: 2, color: "white", display: "block" }}
-                  onClick={handleCloseNavMenu}
-                >
+              <NavLink key={obj.name} to={obj.path} className={({ isActive }) => (isActive ? "active" : "")}>
+                <Button sx={{ my: 2, color: "white", display: "block" }} onClick={handleCloseNavMenu}>
                   {obj.name}
                 </Button>
               </NavLink>
@@ -144,29 +106,15 @@ avatar && console.log(avatar);
             {!user /*|| (user && !user.emailVerified)*/ ? (
               <>
                 <IconButton sx={{ p: 0 }}>
-                  {/*<Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />*/}
-                  <NavLink
-                    to="/signin"
-                    className={({ isActive }) => (isActive ? "active" : "")}
-                  >
-                    <Typography
-                      textAlign="center"
-                      sx={{ color: "white", padding: "10px" }}
-                    >
+                  <NavLink to="/signin" className={({ isActive }) => (isActive ? "active" : "")}>
+                    <Typography textAlign="center" sx={{ color: "white", padding: "10px" }}>
                       Sign In
                     </Typography>
                   </NavLink>
                 </IconButton>
                 <IconButton sx={{ p: 0 }}>
-                  {/*<Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />*/}
-                  <NavLink
-                    to="/signup"
-                    className={({ isActive }) => (isActive ? "active" : "")}
-                  >
-                    <Typography
-                      textAlign="center"
-                      sx={{ color: "white", padding: "10px" }}
-                    >
+                  <NavLink to="/signup" className={({ isActive }) => (isActive ? "active" : "")}>
+                    <Typography textAlign="center" sx={{ color: "white", padding: "10px" }}>
                       Sign Up
                     </Typography>
                   </NavLink>
@@ -174,28 +122,16 @@ avatar && console.log(avatar);
               </>
             ) : (
                 <IconButton    onClick={handleOpenUserMenu}>
-                  <Avatar
-                    sx={{ bgcolor: deepPurple[500], fontSize: "10px" }}
-                    src={avatar}
-                    title={user.email}
-                    alt= {/*user.email.at(0)*/ user.displayName}
-                  />
+                  <Avatar sx={{ bgcolor: deepPurple[500], fontSize: "10px" }} 
+                      src={avatar} title={user.email} alt= {/*user.email.at(0)*/ user.displayName} />
                 </IconButton>   
             )}
             {/*innen van a user menu */}
-            <Menu
-              sx={{ mt: "45px" }}
-              id="menu-appbar"
+            <Menu sx={{ mt: "45px" }} id="menu-appbar"
               anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
+              anchorOrigin={{vertical: "top",horizontal: "right",}}
               keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
+              transformOrigin={{vertical: "top",horizontal: "right",}}
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >

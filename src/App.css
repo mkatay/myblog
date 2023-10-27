@@ -24,7 +24,7 @@ a{
 .app{
  
     background-color: rgba(146, 141, 171,0.2);
-    min-height: 100vh;
+    min-height: calc(100vh - 65px);
     margin-top: 65px;
     padding-top: 1rem;
     
@@ -43,4 +43,7 @@ a{
 }
 .profile{
     margin-top: 65px;
+}
+body{
+    padding-right: 0!important;
 }

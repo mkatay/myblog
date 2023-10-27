@@ -3,25 +3,20 @@ import { useForm } from "react-hook-form";
 import { Form, Label, Row, Col, FormGroup } from "reactstrap";
 import { uploadAvatar } from "../utility/uploadFile";
 import { Loader } from "../components/Loader";
-import {  updateAvatar } from "../utility/crudUtility";
 import { UserContext } from "../context/UserContext";
 import { NotFound } from "./NotFound";
 import { MyAlert } from "../components/MyAlert";
+import { useConfirm } from "material-ui-confirm";
 
 
 export const Profile = ({setAvatar}) => {
   const { user } = useContext(UserContext);
 
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors },
-    setValue,
-  } = useForm({ mode: "onChange" });
+  const {register,handleSubmit,formState: { errors }} = useForm({ mode: "onChange" });
   const [loading, setLoading] = useState(false);
   const [photo, setPhoto] = useState(null);
   const [uploaded, setUploaded] = useState(false);
+  const confirm = useConfirm();
 
   if (!user) return <NotFound />;
 
@@ -33,8 +28,6 @@ export const Profile = ({setAvatar}) => {
       const file = data.file[0];
       console.log(file);
       const photoURL = await uploadAvatar(file,user.uid);
-      //console.log("Feltöltött fájl URL-je:", photoURL);
-      updateAvatar(photoURL,user.uid)
       setAvatar(photoURL)
       setUploaded(true);
     } catch (error) {
@@ -45,9 +38,23 @@ export const Profile = ({setAvatar}) => {
     e.target.reset(); // reset after form submit
   };
 
+  const handleDelete = async () => {
+    try {
+      await  confirm({ description:'Ez egy visszavonhatatlan művelet!',
+                      confirmationText:'igen',
+                      cancellationText:'mégsem',
+                      title:'Biztosan ki szeretnéd törölni a felhasználói fiókodat?'
+             })
+      await deleteProfile(user.uid) 
+    } catch (error) {
+        console.log('mégsem:',error);
+    }
+  }
+
   return (
     <div className="profile  p-3">
       <h3>User profile</h3>
+      <h6>{user.email}</h6>
       <Form onSubmit={handleSubmit(onSubmit)} className="border-bottom border-secondary p-3">
         <Row>
           <Col md={6}>
@@ -81,11 +88,7 @@ export const Profile = ({setAvatar}) => {
         </Row>
         <Row>
           <Col md={2}>
-            <input
-              type="submit"
-              className="btn btn-primary"
-              disabled={loading}
-            />
+            <input type="submit" className="btn btn-primary" disabled={loading}/>
           </Col>
           <Col md={2}>
             {photo && (
@@ -96,7 +99,11 @@ export const Profile = ({setAvatar}) => {
         {loading && <Loader />}
         {uploaded && <MyAlert txt={"Sikeres feltöltés!"} />}
       </Form>
-      <button className="btn btn-danger m-2">Felhasználói fiók törlése</button>
+
+      <button className="btn btn-danger m-2" onClick={handleDelete}>
+          Felhasználói fiók törlése
+      </button>
+
     </div>
   );
 };

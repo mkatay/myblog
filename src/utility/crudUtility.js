@@ -1,8 +1,8 @@
 //a backend kölünválasztva
 import {db,storage} from "./firebaseApp";
-import {collection, addDoc,doc,deleteDoc,query,getDoc,limit,
-  where,arrayUnion,arrayRemove,serverTimestamp, updateDoc,orderBy,onSnapshot, getDocs } from "firebase/firestore";
-import {ref, deleteObject, getDownloadURL} from "firebase/storage"
+import {collection, addDoc,doc,deleteDoc,query,getDoc,limit,getDocs,
+  where,arrayUnion,arrayRemove,serverTimestamp, updateDoc,orderBy,onSnapshot } from "firebase/firestore";
+import {ref, deleteObject} from "firebase/storage"
 
 export const deleteFile=async (photoURL)=>{
   console.log(photoURL);
@@ -90,49 +90,28 @@ export const popularPosts=async (setPopulars)=>{
   return unsubscribe;
 
 }
-export const updateAvatar=async (avatarUrl,userId)=>{
-  const collectionRef = collection(db, "users");
-  const q =query(collectionRef,where('userId','==',userId))
+
+//felhasználói fiók törlése:
+const deletePostsByAuthorId = async (userId) => {
+  const postsRef = collection(db, 'posts');
+  const q = query(postsRef, where('userId', '==', userId));
   const querySnapshot = await getDocs(q);
-  let docId=null
-  querySnapshot.forEach(doc => docId=doc.id)
-  if(docId){
-      const docRef=doc(db, "users", docId);
-      await updateDoc(docRef, {avatarUrl})
-      console.log('update');
-  } else {
-      const collectionRef= collection(db, "users");
-      await addDoc(collectionRef,{userId,avatarUrl})
-      console.log('új');
-  } 
+  querySnapshot.forEach((doc) => {
+    const id = doc.id;
+    const docRef = doc(db, 'posts', id);
+    const querySnap=await getDoc(docRef)
+          querySnap.forEach((doc)=>{
+            await deleteFile(doc.photoURL)
+          })
+    deleteDoc(docRef);
+  });
 }
 
-export const getAvatar = async (userId, setAvatar) => {
-  try {
-    const pngAvatarRef = ref(storage, `avatars/${userId}.png`);
-    const jpgAvatarRef = ref(storage, `avatars/${userId}.jpg`);
-    
-    // Ellenőrizzük, hogy a PNG kiterjesztéssel rendelkező fájl létezik-e
-    if (await getDownloadURL(pngAvatarRef).catch(() => null)) {
-      const downloadURL = await getDownloadURL(pngAvatarRef);
-      console.log('downloadURL (PNG):', downloadURL);
-      setAvatar(downloadURL);
-      return;
-    }
-    
-    // Ellenőrizzük, hogy a JPG kiterjesztéssel rendelkező fájl létezik-e
-    if (await getDownloadURL(jpgAvatarRef).catch(() => null)) {
-      const downloadURL = await getDownloadURL(jpgAvatarRef);
-      console.log('downloadURL (JPG):', downloadURL);
-      setAvatar(downloadURL);
-      return;
-    }
-
-    // Ha egyik fájl sem létezik, akkor itt kezeld le a hibát vagy tedd meg a szükséges intézkedéseket
-  } catch (error) {
-    console.error('Nincs avatar:', error);
-    setAvatar(null)
-  }
+export const deleteProfile=async (userId)=>{
+  //a hozzátartozó postok/ha van törlése:
+  await deletePostsByAuthorId(userId)
+  //avatar ha létezik törölni:
+  
+  //user törlése
+  
 }
-
-
