@@ -7,10 +7,11 @@ import { UserContext } from "../context/UserContext";
 import { NotFound } from "./NotFound";
 import { MyAlert } from "../components/MyAlert";
 import { useConfirm } from "material-ui-confirm";
+import { deleteProfile } from "../utility/crudUtility";
 
 
 export const Profile = ({setAvatar}) => {
-  const { user } = useContext(UserContext);
+  const { user,logoutUser} = useContext(UserContext);
 
   const {register,handleSubmit,formState: { errors }} = useForm({ mode: "onChange" });
   const [loading, setLoading] = useState(false);
@@ -46,6 +47,8 @@ export const Profile = ({setAvatar}) => {
                       title:'Biztosan ki szeretnéd törölni a felhasználói fiókodat?'
              })
       await deleteProfile(user.uid) 
+      // Kiléptetés a sikeres törlés után
+      logoutUser()
     } catch (error) {
         console.log('mégsem:',error);
     }

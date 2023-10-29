@@ -79,7 +79,7 @@ const handleLikes=async ()=>{
           <FaThumbsUp className='text-primary  icon' onClick={handleLikes}/>
           <span>{likes}</span>
         </div>
-        {user &&    
+        {(user && post && user.uid==post.userId)   &&
           <div>
             <FaTrash className='text-danger  icon' onClick={handleDelete}/>
             <FaPen className='text-warning  icon'   onClick={()=>navigate('/update/'+post.id)}/>

@@ -3,6 +3,8 @@ import {db,storage} from "./firebaseApp";
 import {collection, addDoc,doc,deleteDoc,query,getDoc,limit,getDocs,
   where,arrayUnion,arrayRemove,serverTimestamp, updateDoc,orderBy,onSnapshot } from "firebase/firestore";
 import {ref, deleteObject} from "firebase/storage"
+import { deleteAvatar } from "./uploadFile";
+import { getAuth, deleteUser, signOut } from 'firebase/auth';
 
 export const deleteFile=async (photoURL)=>{
   console.log(photoURL);
@@ -96,22 +98,44 @@ const deletePostsByAuthorId = async (userId) => {
   const postsRef = collection(db, 'posts');
   const q = query(postsRef, where('userId', '==', userId));
   const querySnapshot = await getDocs(q);
-  querySnapshot.forEach((doc) => {
-    const id = doc.id;
+  querySnapshot.forEach(async (d) => {
+    const id = d.id;
     const docRef = doc(db, 'posts', id);
     const querySnap=await getDoc(docRef)
-          querySnap.forEach((doc)=>{
-            await deleteFile(doc.photoURL)
-          })
-    deleteDoc(docRef);
+    //console.log(querySnap.data())
+    deleteFile(querySnap.data().photoURL)
+    deleteDoc(docRef)
   });
 }
+
+//felhasznbáló törlése:
+
+const auth = getAuth();
+
+const deleteAccount = async () => {
+  try {
+    // Ellenőrizd, hogy a felhasználó be van-e jelentkezve
+    const user = auth.currentUser;
+
+    if (user) {
+      // Töröld a felhasználót
+      await deleteUser(user);
+      console.log('Felhasználó törölve');
+    } else {
+      console.log('Nincs bejelentkezett felhasználó');
+    }
+  } catch (error) {
+    console.error('Hiba történt a felhasználó törlése során', error);
+  }
+};
+
+
 
 export const deleteProfile=async (userId)=>{
   //a hozzátartozó postok/ha van törlése:
   await deletePostsByAuthorId(userId)
   //avatar ha létezik törölni:
-  
+  await deleteAvatar(userId)
   //user törlése
-  
+  await deleteAccount(userId)
 }

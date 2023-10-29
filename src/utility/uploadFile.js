@@ -60,3 +60,45 @@ export const getAvatar = async (userId, setAvatar) => {
     console.log("Hiba az avatár letöltése során:", err);
   }
 };
+/*export const deleteAvatar=async (userId)=>{
+  let downloadURL
+  try{
+    const storageRefPng = ref(storage, `avatars/${userId}.png`); // PNG kiterjesztés,
+  downloadURL=await getDownloadURL(storageRefPng)
+  if(downloadURL)  await deleteObject(storageRefPng)
+   const storageRefJpg = ref(storage, `avatars/${userId}.jpg`); // JPG kiterjesztés,
+  downloadURL=await getDownloadURL(storageRefJpg)
+  if(downloadURL)   await deleteObject(storageRefJpg)
+  }catch(msg){
+    console.log('nincs törlendő avatar!',msg);
+  }
+}*/
+export const deleteAvatar = async (userId) => {
+  let downloadURL;
+  let pngFound = false;
+
+  try {
+    const storageRefPng = ref(storage, `avatars/${userId}.png`); // PNG kiterjesztés,
+    downloadURL = await getDownloadURL(storageRefPng);
+
+    if (downloadURL) {
+      await deleteObject(storageRefPng);
+      pngFound = true;
+    }
+  } catch (msg) {
+    console.log('PNG törlése nem sikerült!', msg);
+  }
+
+  if (!pngFound) {
+    try {
+      const storageRefJpg = ref(storage, `avatars/${userId}.jpg`); // JPG kiterjesztés,
+      downloadURL = await getDownloadURL(storageRefJpg);
+
+      if (downloadURL) {
+        await deleteObject(storageRefJpg);
+      }
+    } catch (msg) {
+      console.log('JPG törlése nem sikerült!', msg);
+    }
+  }
+}
