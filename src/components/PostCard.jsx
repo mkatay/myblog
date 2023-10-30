@@ -15,7 +15,7 @@ export const PostCard = ({category,photoURL,title,author,description,timestamp,i
   return (
     <div className="card m-3" style={{maxWidth: '100%'}}>
     <div className="row g-0">
-      <div className="col-md-4">
+      <div className="col-md-4 d-flex">
         
         <img src={photoURL} className="img-fluid rounded-start" alt={title}/>
       </div>
@@ -27,8 +27,8 @@ export const PostCard = ({category,photoURL,title,author,description,timestamp,i
           </div>
           
           {/*<p className="card-text" dangerouslySetInnerHTML={htmlContent}></p>*/}
-          <p className="card-text" >{truncatedStory(description)}
-              <small className="text-muted "style={{cursor:'pointer',fontSize:'10px',borderBottom:'1px solid gray'}}
+          <p className="card-text" >{truncatedStory(description)}...
+              <small className="text-muted rounded p-1"style={{cursor:'pointer',fontSize:'10px',border:'1px solid gray',marginLeft:'15px'}}
                 onClick={()=>navigate('detail/'+id)}
                 >részletek</small>
           </p>
