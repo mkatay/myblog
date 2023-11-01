@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom'
 export const PopularPosts = () => {
     const [populars,setPopulars]=useState(null)
     const navigate=useNavigate()
-  console.log('PopularPosts rendering')
+  //console.log('PopularPosts rendering')
     useEffect(()=>{
         popularPosts(setPopulars)
     },[])

@@ -7,7 +7,7 @@ import { PopularPosts } from '../components/PopularPosts'
 export const Home = () => {
   const [selectedCategories,setSelectedCategories] =useState([])
  
-  console.log('home rendering');
+  //console.log('home rendering');
   return (
     <div className='home'>
       <div className="categ " >

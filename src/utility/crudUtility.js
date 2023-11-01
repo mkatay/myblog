@@ -139,3 +139,23 @@ export const deleteProfile=async (userId)=>{
   //user törlése
   await deleteAccount(userId)
 }
+//dashboard:
+
+export const readPostsRows = (setRows) => {
+  const collectionRef = collection(db, "posts");
+  const q = query(collectionRef, orderBy('timestamp', 'desc'))
+  const unsubscribe = onSnapshot(q, (snapshot) => {
+    setRows(snapshot.docs.map(doc => ({ title:doc.data().title,author:doc.data().author,userId:doc.data().userId, id: doc.id })));
+  });
+  return unsubscribe;
+};
+
+export const deleteSelectedPosts=async (selection)=>{
+  selection.map(async (id)=>{
+    const docRef = doc(db, "posts", id);
+    const docSnap = await getDoc(docRef);
+    const photoURL=docSnap.data().photoURL
+    await deletePost(id)
+    await deleteFile(photoURL)
+  })
+}

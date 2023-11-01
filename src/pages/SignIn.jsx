@@ -16,7 +16,7 @@ const defaultTheme = createTheme();
 
 export const SignIn=()=> {
   const navigate=useNavigate()
-  const {loginUser,msg,user,setMsg,deleteAccount}=useContext(UserContext)
+  const {loginUser,msg,user,setMsg}=useContext(UserContext)
 
   //useEffect(()=>{setMsg({...msg,errSignIn:null})},[])
   useEffect(()=>{

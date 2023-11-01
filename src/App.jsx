@@ -18,6 +18,7 @@ import { ConfirmProvider } from "material-ui-confirm";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Profile } from "./pages/Profile";
 import { useState } from "react";
+import { Admin } from "./pages/Admin";
 
 function App() {
   const [avatar,setAvatar]=useState(null)
@@ -39,6 +40,7 @@ function App() {
               <Route path="/signup" element={<SignUp />} />
               <Route path="/pwreset" element={<PwReset />} />
               <Route path="/profile" element={<Profile  setAvatar={setAvatar}/>} />
+              <Route path="/admin" element={<Admin />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </div>

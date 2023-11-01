@@ -31,22 +31,25 @@ const settings = [
   {path:"/logout",name: "Logout"}];
 
 export const Navbar = ({avatar,setAvatar}) => {
-  const { user, logoutUser} = useContext(UserContext);
+  const { user, logoutUser,role} = useContext(UserContext);
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const [navPages, setNavPages] = useState(pages);
 
   const navigate=useNavigate()
+
   useEffect(() => {
     setAvatar(null)
-    if (user /*&& user.emailVerified)*/) {
-      setNavPages([...pages, { path: "create", name: "Create Blog" }]);
+    if (user /*&& user.emailVerified)*/ ) {
+      setNavPages(prev=>[...prev, { path: "create", name: "Create Blog" }]);
       getAvatar(user.uid,setAvatar)
+      role=='admin' &&  setNavPages(prev=>[...prev, { path: "admin", name: "Dashboard" }]);
     } else {
       setNavPages([...pages]);
     }
   }, [user]);
-avatar && console.log(avatar);
+
+//avatar && console.log(avatar);
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
@@ -59,6 +62,7 @@ avatar && console.log(avatar);
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+  console.log('navbar:',role);
     return (
     <AppBar position="fixed"  sx={{backgroundColor: "#74EBD5",backgroundImage: "linear-gradient(#1F1C2C,#928DAB)",}}>
       <Container maxWidth="xl">
@@ -123,7 +127,7 @@ avatar && console.log(avatar);
             ) : (
                 <IconButton    onClick={handleOpenUserMenu}>
                   <Avatar sx={{ bgcolor: deepPurple[500], fontSize: "10px" }} 
-                      src={avatar} title={user.email} alt= {/*user.email.at(0)*/ user.displayName} />
+                      src={avatar} title={user.displayName} alt= {/*user.email.at(0)*/ user.displayName} />
                 </IconButton>   
             )}
             {/*innen van a user menu */}
