@@ -21,15 +21,13 @@ a{
     max-width: 800px;
     margin:0 auto;
 }
-.content{
+.app{
     max-width: 1500px;
     margin: 0 auto;
-}
-.app{
 
     background-color: rgba(146, 141, 171,0.2);
     min-height: calc(100vh - 65px);
-    margin-top: 65px;
+    margin-top: 25px;
     padding-top: 1rem;
    
 }

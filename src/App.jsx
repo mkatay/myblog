@@ -23,7 +23,7 @@ import { Admin } from "./pages/Admin";
 function App() {
   const [avatar,setAvatar]=useState(null)
   return (
-    <div className="content">
+    <div className="app">
     <BrowserRouter>
       <CategProvider>
         <UserProvider>
