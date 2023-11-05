@@ -16,7 +16,7 @@
 }
 
 .categ {
-    min-width: 250px!important; /* Állítsd be a kategória szélességét a tartalomhoz képest */
+    min-width: 200px!important; /* Állítsd be a kategória szélességét a tartalomhoz képest */
     position: sticky;
     top: 65px;
     height: calc(100vh - 65px); /* Állítsd be a magasságot a megjelenítendő terület függvényében */
