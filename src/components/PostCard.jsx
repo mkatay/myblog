@@ -13,7 +13,7 @@ export const PostCard = ({category,photoURL,title,author,description,timestamp,i
 //console.log(timestamp.toString());
 
   return (
-    <div className="card m-3" style={{maxHeight:'300px'}}>
+    <div className="card m-3" >
     <div className="row g-0">
       <div className="col-md-5 d-flex">
         
