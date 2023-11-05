@@ -13,13 +13,13 @@ export const PostCard = ({category,photoURL,title,author,description,timestamp,i
 //console.log(timestamp.toString());
 
   return (
-    <div className="card m-3" style={{maxWidth: '100%'}}>
+    <div className="card m-3" style={{maxHeight:'300px'}}>
     <div className="row g-0">
-      <div className="col-md-4 d-flex">
+      <div className="col-md-5 d-flex">
         
-        <img src={photoURL} className="img-fluid rounded-start" alt={title}/>
+        <img src={photoURL} className=" cardImage rounded-start" alt={title}/>
       </div>
-      <div className="col-md-8">
+      <div className="col-md-7">
         <div className="card-body">
           <div className="d-flex flex-wrap justify-content-between">
             <h5 className="card-title">{title}</h5>

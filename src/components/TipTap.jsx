@@ -7,6 +7,7 @@ import Text from '@tiptap/extension-text'
 import TextAlign from '@tiptap/extension-text-align'
 import StarterKit from "@tiptap/starter-kit";
 import Underline from "@tiptap/extension-underline";
+import './TipTap.css'
 import {
   FaBold,
   FaHeading,
@@ -143,7 +144,7 @@ export const TipTap = ({story, setStory}) => {
       setStory(html);
     },
   },[story]);
-console.log(story);
+//console.log(story);
 
   return (
     <div className="textEditor">

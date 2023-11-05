@@ -21,13 +21,17 @@ a{
     max-width: 800px;
     margin:0 auto;
 }
+.content{
+    max-width: 1500px;
+    margin: 0 auto;
+}
 .app{
- 
+
     background-color: rgba(146, 141, 171,0.2);
     min-height: calc(100vh - 65px);
     margin-top: 65px;
     padding-top: 1rem;
-    
+   
 }
 .createBlog p:not(.textEditor p){
     color:red;
@@ -41,9 +45,20 @@ a{
 .postcard-icon{
     color:rgb(150, 147, 147);
 }
+.cardImage{
+    width: 100%;
+    aspect-ratio: 2/1;
+    object-fit: cover;
+}
+
 .profile{
     margin-top: 65px;
 }
 body{
     padding-right: 0!important;
+}
+.MuiPaper-root{
+    max-width: 1500px;
+    margin:0 auto!important;
+    right: auto!important;
 }

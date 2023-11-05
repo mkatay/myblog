@@ -1,16 +1,28 @@
 .home {
+   
     display: flex;
-    flex-direction: row;
+    flex-direction: row-reverse;
+    padding: 0 15px 0 15px;
+   justify-content: space-between;
+  
 }
 
 .posts {
-    flex: 1;
+   /* flex: 1;
     overflow: auto;
-    margin-right:250px;
+    margin-right:250px;*/
+    flex-grow: 1; /* Kitölti a maradék helyet a konténeren belül */
+    overflow-y: auto; /* Görgethető tartalom, ha szükséges */
 }
 
 .categ {
-    margin-top: 68px;
+    min-width: 250px!important; /* Állítsd be a kategória szélességét a tartalomhoz képest */
+    position: sticky;
+    top: 65px;
+    height: calc(100vh - 65px); /* Állítsd be a magasságot a megjelenítendő terület függvényében */
+    overflow-y: auto; /* Görgethető tartalom, ha szükséges */
+  
+   /* margin-top: 68px;
     width: 250px;
     position: fixed;
     top: 0;
@@ -34,5 +46,6 @@
         position: static;
         width: 100%;
         margin:0;
+        height: 100%;
     }
 }

@@ -101,7 +101,7 @@ export const UserProvider = ({ children }) => {
     try {
       await sendSignInLinkToEmail(auth, email, {
         // this is the URL that we will redirect back to after clicking on the link in mailbox
-        url: 'http://localhost:5173/signin',
+        url:'https://myblog-7535b.web.app/signin' /*'http://localhost:5173/signin'*/,
         handleCodeInApp: true,//the email verification link or password reset link should be handled by your application
       });
       localStorage.setItem('email', email);

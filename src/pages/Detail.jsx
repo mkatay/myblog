@@ -62,7 +62,9 @@ const handleLikes=async ()=>{
     <div className="singlePost container">
     
       <div className="image-container">
-         {post &&  <img  className="image" src={post?.photoURL} alt={post?.title}  />}
+         {post &&  <img  className="image" src={post?.photoURL} alt={post?.title}  
+          onClick={()=> window.open(post?.photoURL, "_blank")} 
+         />}
       </div>
     
        <h3 className="text-center m-2">

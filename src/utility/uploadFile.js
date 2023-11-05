@@ -6,11 +6,11 @@ import {
   list,
   deleteObject,
 } from "firebase/storage";
-import uuid from "react-uuid";
+import {v4 as uuidv4} from "uuid";
 
 export const uploadFile = async (file) => {
   try {
-    const fileRef = ref(storage, `uploads/${uuid() + file.name.slice(-4)}`);
+    const fileRef = ref(storage, `uploads/${uuidv4() + file.name.slice(-4)}`);
     await uploadBytes(fileRef, file);
     const downloadURL = await getDownloadURL(fileRef);
     return downloadURL;

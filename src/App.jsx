@@ -23,6 +23,7 @@ import { Admin } from "./pages/Admin";
 function App() {
   const [avatar,setAvatar]=useState(null)
   return (
+    <div className="content">
     <BrowserRouter>
       <CategProvider>
         <UserProvider>
@@ -48,6 +49,7 @@ function App() {
         </UserProvider>
       </CategProvider>
     </BrowserRouter>
+    </div>
   );
 }
 

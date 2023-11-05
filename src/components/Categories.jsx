@@ -12,7 +12,7 @@ export const Categories = ({selectedCategories,setSelectedCategories}) => {
   return (
     <Stack direction="row" spacing={1} 
       sx={{dispaly:'flex',flexWrap:'wrap',justifyContent:'center',padding:'5px', gap:'10px',marginTop:'2.4rem'}}>
-     <Typography sx={{width:'100%',textAlign:'center',borderBottom:'1px solid gray'}}>Categories</Typography>
+     <Typography sx={{width:'100%',textAlign:'center',boxShadow: '0 4px 2px -2px gray'}}>Categories</Typography>
      {categories && categories.map(ctg=>
         <SingleChip key={ctg} category={ctg} 
           selectedCategories={selectedCategories}   
