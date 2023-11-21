@@ -108,7 +108,7 @@ const deletePostsByAuthorId = async (userId) => {
   });
 }
 
-//felhasznbáló törlése:
+//felhasználó törlése:
 
 const auth = getAuth();
 

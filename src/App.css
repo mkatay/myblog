@@ -43,11 +43,6 @@ a{
 .postcard-icon{
     color:rgb(150, 147, 147);
 }
-.cardImage{
-    width: 100%;
-    aspect-ratio: 2/1;
-    object-fit: cover;
-}
 
 .profile{
     margin-top: 65px;
